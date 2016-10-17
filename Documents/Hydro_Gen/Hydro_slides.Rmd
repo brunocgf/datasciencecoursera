@@ -1,0 +1,43 @@
+---
+title: "Hydro_Slides"
+author: "Bruno Gonzalez"
+date: "October 16, 2016"
+output: slidy_presentation
+---
+
+## Summary
+
+This is an R Markdown presentation of the Electric Generation of the Hydroelectric Plants on México.
+
+## Hydro Generation
+
+```{r, message=FALSE, echo=FALSE, warning=FALSE}
+
+library(plotly)
+setwd("C:/Users/Bruno Gonzalez/Documents")
+
+hydro_gen <- read.csv("generacionHidro.csv")
+hydro_gen$FECHA <- as.Date(hydro_gen$FECHA, "%d/%m/%y")
+
+month <- "01"
+hydro_month <- subset(hydro_gen, format.Date(FECHA, "%m")== month)
+dup <- duplicated(format.Date(hydro_month$FECHA, "%d"))
+days <- format.Date(hydro_month[!dup,]$FECHA, "%d")
+
+days_m <- matrix(hydro_month$TOTAL, nrow = 24, ncol = length(days))
+
+plot_ly(z=days_m, type="surface") %>%
+layout(
+  scene = list(
+    xaxis = list(title="Days"),
+    yaxis = list(title="Hours"),
+    zaxis = list(title="MWh")
+    ))
+  
+
+
+```
+
+## Thank you
+
+

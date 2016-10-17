@@ -33,10 +33,11 @@ server <- shinyServer(function(input, output) {
   output$plot <- renderPlotly({
     plot_ly(z=days_m(), type="surface") %>%
     layout(
-      scene = list(
-        xaxis = list(title="Days"),
-        yaxis = list(title="Hours"),
-        zaxis = list(title="MWh")
+      scene =
+        list(
+          xaxis = list(title="Days"),
+          yaxis = list(title="Hours"),
+          zaxis = list(title="MWh", range=c(0,9000))
       ),
       autosize=F, width=1000, height=800
     )
